@@ -1,0 +1,44 @@
+schemaVersion: 1
+
+items:
+  - id: hunspell-zh-cn
+    type: hunspell
+    name: 中文简繁/异体字与新字体通查 (Hunspell)
+    description: |
+      用于中文简繁转换、正体异体字，以及中文与日本新字体（Shinjitai）通查的 Hunspell 词形表。
+    author: yx-wh
+    # 上游仓库暂未设置 LICENSE 文件，请以仓库说明为准
+    license: See Upstream Repository
+    sourceUrl: https://github.com/yx-wh/hunspell_zh_CN
+    languages:
+      - zh
+    format: hunspell
+    extract: false
+    source:
+      type: github_raw
+      repo: yx-wh/hunspell_zh_CN
+      branch: main
+      files:
+        - zh_CN.aff
+        - zh_CN.dic
+
+  - id: hunspell-ja-jp
+    type: hunspell
+    name: 日语词形还原与交ぜ書き通查 (Hunspell)
+    description: |
+      支持日语动词/形容词活用还原、旧字体/异体字归一化以及交ぜ書き（混合假名汉字）还原的 Hunspell 词形库（推荐开启 Two-Pass Lookup）。
+    author: Gary / yx-wh
+    # 上游仓库暂未设置 LICENSE 文件，请以仓库说明为准
+    license: See Upstream Repository
+    sourceUrl: https://github.com/yx-wh/hunspell_ja_JP
+    languages:
+      - ja
+    format: hunspell
+    extract: false
+    source:
+      type: github_raw
+      repo: yx-wh/hunspell_ja_JP
+      branch: master
+      files:
+        - ja_JP.aff
+        - ja_JP.dic

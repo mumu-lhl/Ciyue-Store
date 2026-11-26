@@ -1,0 +1,52 @@
+name: Sync dev to main
+
+on:
+  schedule:
+    # Daily at 00:00 UTC+8 (16:00 UTC)
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check if dev has new commits for main
+        id: check
+        run: |
+          git fetch origin dev main
+          if git merge-base --is-ancestor origin/dev origin/main; then
+            echo "ahead=false" >> "$GITHUB_OUTPUT"
+            echo "main is already up to date with dev."
+          else
+            echo "ahead=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up uv & Python
+        if: steps.check.outputs.ahead == 'true'
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.15"
+
+      - name: Validate dev catalog before syncing
+        if: steps.check.outputs.ahead == 'true'
+        run: |
+          git checkout origin/dev
+          uv run --with pyyaml python -m unittest discover -s scripts -p "test_*.py" -v
+          uv run --with pyyaml python scripts/validate_catalog.py catalog.yaml
+
+      - name: Fast-forward / merge dev into main
+        if: steps.check.outputs.ahead == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B main origin/main
+          git merge --ff-only origin/dev || git merge --no-edit origin/dev
+          git push origin main
