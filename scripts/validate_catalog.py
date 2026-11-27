@@ -25,6 +25,7 @@ VALID_FORMATS = {
 VALID_SOURCE_TYPES = {"github_release", "github_raw", "direct"}
 REPO_PATTERN = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
 ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
+TRANSLATION_KEY_PATTERN = re.compile(r"^[a-z]{2,8}(?:_[a-z0-9]{1,8})*$")
 
 
 def _is_non_empty_str(value: Any) -> bool:
@@ -105,6 +106,51 @@ def validate_catalog_data(data: Any) -> list[str]:
         extract = item.get("extract")
         if extract is not None and not isinstance(extract, bool):
             errors.append(f"{label}: 'extract' must be a boolean if provided.")
+
+        translations = item.get("translations")
+        if translations is not None:
+            if not isinstance(translations, dict):
+                errors.append(f"{label}: 'translations' must be a mapping.")
+            else:
+                seen_translation_keys: set[str] = set()
+                for raw_key, translation in translations.items():
+                    if not _is_non_empty_str(raw_key):
+                        errors.append(
+                            f"{label}: translation keys must be non-empty strings."
+                        )
+                        continue
+                    normalized_key = raw_key.strip().lower().replace("-", "_")
+                    if not TRANSLATION_KEY_PATTERN.match(normalized_key):
+                        errors.append(
+                            f"{label}: translation key {raw_key!r} must be a base or region language tag."
+                        )
+                    if normalized_key in seen_translation_keys:
+                        errors.append(
+                            f"{label}: duplicate translation key {raw_key!r} after normalization."
+                        )
+                    seen_translation_keys.add(normalized_key)
+
+                    if not isinstance(translation, dict):
+                        errors.append(
+                            f"{label}: translation {raw_key!r} must be a mapping."
+                        )
+                        continue
+
+                    for field in ("name", "description"):
+                        if field in translation and not _is_non_empty_str(
+                            translation.get(field)
+                        ):
+                            errors.append(
+                                f"{label}: translation {raw_key!r} field {field!r} must be a non-empty string."
+                            )
+
+                    if not any(
+                        _is_non_empty_str(translation.get(field))
+                        for field in ("name", "description")
+                    ):
+                        errors.append(
+                            f"{label}: translation {raw_key!r} must provide a non-empty 'name' or 'description'."
+                        )
 
         source = item.get("source")
         if not isinstance(source, dict):

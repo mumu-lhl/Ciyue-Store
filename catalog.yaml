@@ -3,9 +3,26 @@ schemaVersion: 1
 items:
   - id: hunspell-zh-cn
     type: hunspell
-    name: 中文简繁/异体字与新字体通查 (Hunspell)
+    name: 中文简繁/异体字通查与日文新字体→中文汉字查询 (Hunspell)
     description: |
-      用于中文简繁转换、正体异体字，以及中文与日本新字体（Shinjitai）通查的 Hunspell 词形表。
+      用于中文简体、繁体相互查询，异体字到正体字查询，以及日本新字体汉字到中文汉字的 Hunspell 词表。
+    translations:
+      en:
+        name: Chinese Simplified/Traditional, Variant & Japanese Shinjitai-to-Chinese Lookup (Hunspell)
+        description: |
+          Hunspell word list for cross-lookup between Chinese simplified and traditional characters, variant-to-standard character lookup, and Japanese Shinjitai-to-Chinese character lookup.
+      ja:
+        name: 中国語 簡体字・繁体字・異体字検索と日本語新字体→中国語漢字検索 (Hunspell)
+        description: |
+          中国語の簡体字と繁体字の相互検索、異体字から正字体への検索、および日本語の新字体漢字から中国語漢字への検索に対応する Hunspell 単語リスト。
+      zh_HK:
+        name: 中文簡繁/異體字通查與日文新字體→中文漢字查詢 (Hunspell)
+        description: |
+          用於中文簡體、繁體相互查詢，異體字到正體字查詢，以及日本新字體漢字到中文漢字的 Hunspell 詞表。
+      zh_TW:
+        name: 中文簡繁/異體字通查與日文新字體→中文漢字查詢 (Hunspell)
+        description: |
+          用於中文簡體、繁體相互查詢，異體字到正體字查詢，以及日本新字體漢字到中文漢字的 Hunspell 詞表。
     author: yx-wh
     # 上游仓库暂未设置 LICENSE 文件，请以仓库说明为准
     license: See Upstream Repository
@@ -24,9 +41,26 @@ items:
 
   - id: hunspell-ja-jp
     type: hunspell
-    name: 日语词形还原与交ぜ書き通查 (Hunspell)
+    name: 日本語の活用・旧字体・混ぜ書き検索 (Hunspell)
     description: |
-      支持日语动词/形容词活用还原、旧字体/异体字归一化以及交ぜ書き（混合假名汉字）还原的 Hunspell 词形库（推荐开启 Two-Pass Lookup）。
+      日本語の動詞・形容詞の活用還元、旧字体・異体字の正規化、混ぜ書きの還元等に対応する Hunspell 形態素辞書（Two-Pass Lookup の有効化を推奨）。
+    translations:
+      zh:
+        name: 日语词形还原、旧字体转换、混书转换 (Hunspell)
+        description: |
+          支持日语动词/形容词活用还原为辞书形、旧字体/异体字归一化为新字体以及将混书形式转换到全汉字形式的 Hunspell 词表（推荐开启 Two-Pass Lookup）。
+      en:
+        name: Japanese Inflection, Kyūjitai & Mazegaki Lookup (Hunspell)
+        description: |
+          Hunspell morphology dictionary for Japanese verb/adjective inflection back to dictionary forms, kyūjitai/itaiji normalization to shinjitai, and mazegaki (mixed kana-kanji) conversion to all-kanji forms (Two-Pass Lookup recommended).
+      zh_HK:
+        name: 日語詞形還原、舊字體轉換、混書轉換 (Hunspell)
+        description: |
+          支持日語動詞/形容詞活用還原為辭書形、舊字體/異體字歸一化為新字體以及將混書形式轉換到全漢字形式的 Hunspell 詞表（推薦開啓 Two-Pass Lookup）。
+      zh_TW:
+        name: 日語詞形還原、舊字體轉換、混書轉換 (Hunspell)
+        description: |
+          支援日語動詞/形容詞活用還原為辭書形、舊字體/異體字歸一化為新字體，以及將混書形式轉換到全漢字形式的 Hunspell 詞表（推薦開啟 Two-Pass Lookup）。
     author: Gary / yx-wh
     # 上游仓库暂未设置 LICENSE 文件，请以仓库说明为准
     license: See Upstream Repository
@@ -42,3 +76,83 @@ items:
       files:
         - ja_JP.aff
         - ja_JP.dic
+
+  - id: hunspell-en-us
+    type: hunspell
+    name: English Lemma Dictionary (Hunspell)
+    description: |
+      Hunspell morphology dictionary for English for lemma lookup, with st: stem links and derived-word tags (based on OpenOffice.org en_US and GoldenDict better morphologies).
+    translations:
+      zh:
+        name: 英语词形还原词表 (Hunspell)
+        description: |
+          面向英语词形还原的 Hunspell 词表，补充 st: 词干链接与派生词标签（基于 OpenOffice.org en_US 和 GoldenDict better morphologies）。
+      zh_HK:
+        name: 英語詞形還原詞表 (Hunspell)
+        description: |
+          面向英語詞形還原的 Hunspell 詞表，補充 st: 詞幹鏈接與派生詞標籤（基於 OpenOffice.org en_US 和 GoldenDict better morphologies）。
+      zh_TW:
+        name: 英語詞形還原詞表 (Hunspell)
+        description: |
+          面向英語詞形還原的 Hunspell 詞表，補充 st: 詞幹連結與派生詞標籤（基於 OpenOffice.org en_US 和 GoldenDict better morphologies）。
+      ja:
+        name: 英語 見出し語還元辞書 (Hunspell)
+        description: |
+          英語の見出し語還元（lemma resolution）向け Hunspell 辞書。st: 語幹リンクと派生語タグを追加（OpenOffice.org en_US と GoldenDict better morphologies を基に）。
+    author: yx-wh / OpenOffice.org
+    # en_US.dic: LGPL; en_US.aff: BSD; see en_US.txt
+    license: LGPL / BSD (see upstream)
+    sourceUrl: https://github.com/yx-wh/hunspell_en_US
+    languages:
+      - en
+    format: hunspell
+    extract: false
+    source:
+      type: github_raw
+      repo: yx-wh/hunspell_en_US
+      branch: main
+      files:
+        - en_US.aff
+        - en_US.dic
+
+  - id: hunspell-de-de
+    type: hunspell
+    name: Deutsches Lemma-Wörterbuch (Hunspell)
+    description: |
+      Hunspell-Morphologiewörterbuch für Deutsch (frami-Ausgabe) zur Lemmatisierung, mit st:-Stammverweisen für trennbare Verben und unregelmäßige Partizipien (Two-Pass Lookup empfohlen).
+    translations:
+      en:
+        name: German Lemma Dictionary (Hunspell)
+        description: |
+          Hunspell morphology dictionary for German (frami edition) for lemma lookup, with st: stem links for separable verbs and irregular participles (Two-Pass Lookup recommended).
+      zh:
+        name: 德语词形还原词表 (Hunspell)
+        description: |
+          面向德语词形还原的 Hunspell 词表（frami 版），为可分动词和不规则分词补充 st: 词干链接（推荐开启 Two-Pass Lookup）。
+      zh_HK:
+        name: 德語詞形還原詞表 (Hunspell)
+        description: |
+          面向德語詞形還原的 Hunspell 詞表（frami 版），為可分動詞和不規則分詞補充 st: 詞幹鏈接（推薦開啓 Two-Pass Lookup）。
+      zh_TW:
+        name: 德語詞形還原詞表 (Hunspell)
+        description: |
+          面向德語詞形還原的 Hunspell 詞表（frami 版），為可分動詞和不規則分詞補充 st: 詞幹連結（推薦開啟 Two-Pass Lookup）。
+      ja:
+        name: ドイツ語 見出し語還元辞書 (Hunspell)
+        description: |
+          ドイツ語の見出し語還元向け Hunspell 辞書（frami 版）。分離動詞や不規則分詞に st: 語幹リンクを追加（Two-Pass Lookup の有効化を推奨）。
+    author: yx-wh / frami
+    # see de_DE_README_frami.txt
+    license: GPL-2.0
+    sourceUrl: https://github.com/yx-wh/hunspell_de_DE
+    languages:
+      - de
+    format: hunspell
+    extract: false
+    source:
+      type: github_raw
+      repo: yx-wh/hunspell_de_DE
+      branch: main
+      files:
+        - de_DE.aff
+        - de_DE.dic

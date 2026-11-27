@@ -4,6 +4,26 @@ from pathlib import Path
 from validate_catalog import validate_catalog_data, validate_file
 
 
+def _item(**overrides):
+    item = {
+        "id": "translated",
+        "type": "hunspell",
+        "name": "默认名称",
+        "description": "默认描述",
+        "author": "Tester",
+        "license": "MIT",
+        "sourceUrl": "https://example.com",
+        "format": "hunspell",
+        "source": {
+            "type": "github_raw",
+            "repo": "a/b",
+            "files": ["a.aff", "a.dic"],
+        },
+    }
+    item.update(overrides)
+    return item
+
+
 class ValidateCatalogTest(unittest.TestCase):
     def test_repo_catalog_is_valid(self) -> None:
         catalog_path = Path(__file__).resolve().parent.parent / "catalog.yaml"
@@ -46,6 +66,61 @@ class ValidateCatalogTest(unittest.TestCase):
         }
         errors = validate_catalog_data({"schemaVersion": 1, "items": [item, item]})
         self.assertTrue(any("duplicate id" in e for e in errors))
+
+    def test_translations_are_accepted(self) -> None:
+        errors = validate_catalog_data(
+            {
+                "schemaVersion": 1,
+                "items": [
+                    _item(
+                        translations={
+                            "en": {
+                                "name": "English name",
+                                "description": "English description",
+                            },
+                            "zh_TW": {"name": "繁體名稱"},
+                            "ja": {"description": "日本語の説明"},
+                        }
+                    )
+                ],
+            }
+        )
+        self.assertEqual(errors, [])
+
+    def test_invalid_translations_are_reported(self) -> None:
+        errors = validate_catalog_data(
+            {
+                "schemaVersion": 1,
+                "items": [
+                    _item(
+                        translations={
+                            "en": "not-a-map",
+                            "zh_TW": {"name": ""},
+                            "bad key": {"name": "Invalid key"},
+                            "zh-TW": {"name": "Duplicate"},
+                        }
+                    )
+                ],
+            }
+        )
+        self.assertTrue(any("must be a mapping" in e for e in errors))
+        self.assertTrue(
+            any(
+                "must provide a non-empty 'name' or 'description'" in e
+                for e in errors
+            )
+        )
+        self.assertTrue(any("language tag" in e for e in errors))
+        self.assertTrue(any("duplicate translation key" in e for e in errors))
+
+    def test_translations_must_be_a_mapping(self) -> None:
+        errors = validate_catalog_data(
+            {
+                "schemaVersion": 1,
+                "items": [_item(translations=["en"])],
+            }
+        )
+        self.assertTrue(any("'translations' must be a mapping" in e for e in errors))
 
 
 if __name__ == "__main__":
