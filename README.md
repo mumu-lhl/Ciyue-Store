@@ -22,6 +22,7 @@ items:
 | `type` | string | Yes | Resource category: `dictionary`, `hunspell`, or `audio`. |
 | `name` | string | Yes | Display name shown in the store. |
 | `description` | string | No | Short description (supports YAML multiline `\|`). |
+| `translations` | object | No | Optional per-language overrides for `name`/`description`. Keys are base or region language tags (e.g. `en`, `zh`, `zh_TW`). Missing fields fall back to the item's default `name`/`description`. |
 | `author` | string | Yes | Author or maintainer name. |
 | `license` | string | Yes | License identifier (e.g. `MIT`, `GPL-3.0`, `CC-BY-SA-4.0`). |
 | `sourceUrl` | string | Yes | Upstream homepage or repository URL (`http://` or `https://`). |
@@ -29,6 +30,32 @@ items:
 | `format` | string | Yes | `mdx`, `stardict`, `zim`, `hunspell`, `audio_mdd`, `audio_zip`, or `audio_zips`. |
 | `extract` | bool | No | Whether downloaded `.zip` files should be extracted. Defaults to `false` (keep `false` for `audio_zip` / `audio_zips` and `hunspell` raw files; set `true` for zipped dictionaries). |
 | `source` | object | Yes | Download source configuration (see below). |
+
+### Multilingual metadata
+
+`name` and `description` are the item's default text. Write them in the resource's own language: a Chinese Hunspell uses Chinese, a Japanese Hunspell uses Japanese, an English dictionary uses English, and so on.
+
+Add `translations` for other UI languages:
+
+```yaml
+name: 中文简繁/异体字与新字体通查 (Hunspell)
+description: 用于中文简繁转换……
+translations:
+  en:
+    name: Chinese Simplified/Traditional & Variant Lookup (Hunspell)
+    description: Hunspell morphology data for Chinese script conversion...
+  zh_TW:
+    name: 中文簡繁/異體字與新字體通查 (Hunspell)
+    description: 用於中文簡繁轉換……
+```
+
+Ciyue resolves the text in this order:
+
+1. Exact UI language tag (e.g. `zh_TW`, `en_US`)
+2. Base language (e.g. `zh`, `en`)
+3. The item's default `name` / `description`
+
+There is no forced English fallback. A translation may provide only `name` or only `description`; the missing field falls back to the item's default. `translations` is optional and additive, so `schemaVersion` stays `1`.
 
 ### Source Types
 

@@ -22,6 +22,7 @@ items:
 | `type` | string | 是 | 资源类型：`dictionary`（词典）、`hunspell` 或 `audio`（语音包）。 |
 | `name` | string | 是 | 商店中展示的名称。 |
 | `description` | string | 否 | 简介（支持 YAML 多行文本 `\|`）。 |
+| `translations` | object | 否 | 多语言覆盖 `name`/`description`。key 为基础语言或地区标签（如 `en`、`zh`、`zh_TW`）；缺失字段回退到该条目的默认 `name`/`description`。 |
 | `author` | string | 是 | 作者或维护者名称。 |
 | `license` | string | 是 | 授权协议（如 `MIT`、`GPL-3.0`、`CC-BY-SA-4.0`）。 |
 | `sourceUrl` | string | 是 | 资源上游主页或仓库地址（`http://` 或 `https://`）。 |
@@ -29,6 +30,32 @@ items:
 | `format` | string | 是 | 格式标识：`mdx`、`stardict`、`zim`、`hunspell`、`audio_mdd`、`audio_zip` 或 `audio_zips`。 |
 | `extract` | bool | 否 | 下载后是否解压 `.zip` 压缩包，默认 `false`（语音包 `audio_zip`/`audio_zips` 与直链 `.aff`/`.dic` 保持 `false`；词典压缩包设为 `true`）。 |
 | `source` | object | 是 | 下载来源配置（见下文）。 |
+
+### 多语言文案
+
+`name` / `description` 是该资源的默认文案，应使用资源自身语言书写：中文 Hunspell 写中文，日文 Hunspell 写日文，英文词典写英文，以此类推。
+
+其他界面语言的译名放在 `translations`：
+
+```yaml
+name: 中文简繁/异体字与新字体通查 (Hunspell)
+description: 用于中文简繁转换……
+translations:
+  en:
+    name: Chinese Simplified/Traditional & Variant Lookup (Hunspell)
+    description: Hunspell morphology data for Chinese script conversion...
+  zh_TW:
+    name: 中文簡繁/異體字與新字體通查 (Hunspell)
+    description: 用於中文簡繁轉換……
+```
+
+Ciyue 的查找顺序：
+
+1. 完整 UI 语言标签（如 `zh_TW`、`en_US`）
+2. 基础语言（如 `zh`、`en`）
+3. 该条目的默认 `name` / `description`
+
+不会强制回退到英文。某个语言可以只提供 `name` 或只提供 `description`，缺失字段回退到该条目的默认值。`translations` 是可选新增字段，`schemaVersion` 仍为 `1`。
 
 ### 来源类型（`source`）
 
