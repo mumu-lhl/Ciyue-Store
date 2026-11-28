@@ -122,6 +122,17 @@ class ValidateCatalogTest(unittest.TestCase):
         )
         self.assertTrue(any("'translations' must be a mapping" in e for e in errors))
 
+    def test_top_level_name_validation(self) -> None:
+        valid = validate_catalog_data(
+            {"schemaVersion": 1, "name": "Community Store", "items": []}
+        )
+        self.assertEqual(valid, [])
+
+        invalid = validate_catalog_data(
+            {"schemaVersion": 1, "name": "   ", "items": []}
+        )
+        self.assertTrue(any("'name'" in e for e in invalid))
+
 
 if __name__ == "__main__":
     unittest.main()

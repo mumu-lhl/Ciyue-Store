@@ -10,6 +10,7 @@
 
 ```yaml
 schemaVersion: 1
+name: Ciyue Official  # 可选；该清单源的展示名称
 items:
   - ...
 ```
