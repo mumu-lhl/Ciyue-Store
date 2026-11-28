@@ -48,6 +48,10 @@ def validate_catalog_data(data: Any) -> list[str]:
     if not isinstance(schema_version, int) or schema_version < 1:
         errors.append("schemaVersion must be a positive integer.")
 
+    if "name" in data and data.get("name") is not None:
+        if not _is_non_empty_str(data.get("name")):
+            errors.append("'name' must be a non-empty string if provided.")
+
     items = data.get("items")
     if not isinstance(items, list):
         errors.append("'items' must be a list.")

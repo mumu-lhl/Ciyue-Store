@@ -10,6 +10,7 @@ Official resource catalog for [Ciyue](https://github.com/mumu-lhl/Ciyue), provid
 
 ```yaml
 schemaVersion: 1
+name: Ciyue Official  # Optional; display name for this catalog source
 items:
   - ...
 ```
