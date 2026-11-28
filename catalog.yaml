@@ -43,24 +43,24 @@ items:
     type: hunspell
     name: 小篆（zh_SEAL）今文字互转词表 (Hunspell)
     description: |
-      用于简体/繁体中文与 Unicode 18.0 小篆字符的双向互转，另含日本新字体到小篆的单向映射（实验性，字符级；推荐开启 Two-Pass Lookup）。
+      用于简体/繁体中文与 Unicode 18.0 小篆字符的双向互转，另含日本新字体到小篆的单向映射（实验性，字符级）。
     translations:
       en:
         name: Seal Script (zh_SEAL) ↔ Modern Chinese Lookup (Hunspell)
         description: |
-          Experimental character-level Hunspell table for bidirectional lookup between Simplified/Traditional Chinese and Unicode 18.0 Seal Script characters, plus one-way Japanese shinjitai → seal mapping (Two-Pass Lookup recommended).
+          Experimental character-level Hunspell table for bidirectional lookup between Simplified/Traditional Chinese and Unicode 18.0 Seal Script characters, plus one-way Japanese shinjitai → seal mapping.
       ja:
         name: 篆書（zh_SEAL）と現代中国語の相互検索 (Hunspell)
         description: |
-          簡体字・繁体字と Unicode 18.0 の篆書文字との双方向検索、および日本語新字体から篆書への一方向対応を含む実験的な文字レベルの Hunspell 表（Two-Pass Lookup を推奨）。
+          簡体字・繁体字と Unicode 18.0 の篆書文字との双方向検索、および日本語新字体から篆書への一方向対応を含む実験的な文字レベルの Hunspell 表。
       zh_HK:
         name: 小篆（zh_SEAL）今文字互轉詞表 (Hunspell)
         description: |
-          用於簡體/繁體中文與 Unicode 18.0 小篆字元的雙向互轉，另含日本新字體到小篆的單向對應（實驗性，字元級；建議開啟 Two-Pass Lookup）。
+          用於簡體/繁體中文與 Unicode 18.0 小篆字元的雙向互轉，另含日本新字體到小篆的單向對應（實驗性，字元級）。
       zh_TW:
         name: 小篆（zh_SEAL）今文字互轉詞表 (Hunspell)
         description: |
-          用於簡體/繁體中文與 Unicode 18.0 小篆字元的雙向互轉，另含日本新字體到小篆的單向對應（實驗性，字元級；建議開啟 Two-Pass Lookup）。
+          用於簡體/繁體中文與 Unicode 18.0 小篆字元的雙向互轉，另含日本新字體到小篆的單向對應（實驗性，字元級）。
     author: yx-wh / OpenCC
     license: Apache-2.0
     sourceUrl: https://github.com/yx-wh/hunspell_zh_CN
